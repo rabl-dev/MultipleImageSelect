@@ -6,10 +6,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.darsh.multipleimageselect.R;
 import com.darsh.multipleimageselect.models.Album;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -41,9 +42,10 @@ public class CustomAlbumSelectAdapter extends CustomGenericAdapter<Album> {
         viewHolder.imageView.getLayoutParams().height = size;
 
         viewHolder.textView.setText(arrayList.get(position).name);
-        Glide.with(context)
-                .load(arrayList.get(position).cover)
-                .placeholder(R.drawable.image_placeholder).centerCrop().into(viewHolder.imageView);
+        Picasso.with(context)
+                .load(new File(arrayList.get(position).cover))
+                .fit().centerCrop()
+                .placeholder(R.drawable.image_placeholder).into(viewHolder.imageView);
 
         return convertView;
     }

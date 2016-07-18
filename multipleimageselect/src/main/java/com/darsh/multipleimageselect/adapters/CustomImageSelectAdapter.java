@@ -1,15 +1,17 @@
 package com.darsh.multipleimageselect.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.darsh.multipleimageselect.R;
 import com.darsh.multipleimageselect.models.Image;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -45,15 +47,16 @@ public class CustomImageSelectAdapter extends CustomGenericAdapter<Image> {
 
         if (arrayList.get(position).isSelected) {
             viewHolder.view.setAlpha(0.5f);
-            ((FrameLayout) convertView).setForeground(context.getResources().getDrawable(R.drawable.ic_done_white));
+            ((FrameLayout) convertView).setForeground(ContextCompat.getDrawable(context, R.drawable.ic_done_white));
 
         } else {
             viewHolder.view.setAlpha(0.0f);
             ((FrameLayout) convertView).setForeground(null);
         }
 
-        Glide.with(context)
-                .load(arrayList.get(position).path)
+        Picasso.with(context)
+                .load(new File(arrayList.get(position).path))
+                .fit().centerCrop()
                 .placeholder(R.drawable.image_placeholder).into(viewHolder.imageView);
 
         return convertView;
